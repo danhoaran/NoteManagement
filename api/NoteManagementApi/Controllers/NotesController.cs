@@ -1,5 +1,6 @@
 ﻿using Markdig;
 using Microsoft.AspNetCore.Mvc;
+using NoteManagementApi.Core.DTOs;
 using NoteManagementCore.DTOs;
 using NoteManagementCore.Services;
 using NoteManagementServices.Services;
@@ -44,10 +45,10 @@ namespace NoteManagementApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(NoteForCreationDto noteForCreationDto)
+        public async Task<ActionResult<NoteCreationResponseDto>> Create(NoteForCreationDto noteForCreationDto)
         {
             await _noteService.CreateNoteAsync(noteForCreationDto);
-            return NoContent();
+            return Ok(new NoteCreationResponseDto { Success = true });
         }
 
         [HttpPut]

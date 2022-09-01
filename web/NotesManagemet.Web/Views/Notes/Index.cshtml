@@ -10,14 +10,42 @@
 
 <h1>Create note here</h1>
 
-@foreach(var category in Model.Categories)
-{
-    <tr>
-        <td>
-            <input id="@category.Value" type="checkbox" name="Category" value="@category.Value" checked="@category.Selected" />
-        </td>
-        <td>
-            <label for="@category.Value">@category.Text</label>
-        </td>
-    </tr>
+
+<form id="create-note-form" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label asp-for="@Model.Categories" class="form-label"></label>
+@*        @foreach (var category in Model.Categories)
+        {
+            <div class="form-check">
+                <input class="form-check-input" id="@category.Value" type="checkbox" name="Category" value="@category.Value" checked="@category.Selected" />
+                <label class="form-check-label" for="@category.Value">@category.Text</label>
+            </div>
+        }*@
+
+        @for (var i = 0; i < Model.Categories.Count; i++)
+        {
+            <li>
+                <input id="@($"Categories_{i}__Text")" name="@($"Categories[{i}].Text")" type="hidden" value="@Model.Categories[i].Text" />
+                <input id="@($"Categories_{i}__Value")" name="@($"Categories[{i}].Value")" type="hidden" value="@Model.Categories[i].Value" />
+                <input id="@($"Categories_{i}__Selected")" name="@($"Categories[{i}].Selected")" class="form-check-input" type="checkbox" value="true" />
+                <label class="form-check-label" for="@Model.Categories[i].Value">@Model.Categories[i].Text</label>
+            </li>
+        }
+
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.Body" class="form-label"></label>
+        <textarea class="form-control" asp-for="@Model.Body"></textarea>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/notes.js"></script>
 }
+
+
+

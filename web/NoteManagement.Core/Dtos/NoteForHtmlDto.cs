@@ -1,11 +1,10 @@
-﻿using NoteManagementCore.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoteManagementCore.DTOs
+namespace NoteManagement.Core.Dtos
 {
     public class NoteForHtmlDto
     {

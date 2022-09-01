@@ -28,6 +28,13 @@ builder.Services.AddScoped<INoteService, NoteService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<NoteManagementContext>();
+    dbContext.Database.EnsureCreated();
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

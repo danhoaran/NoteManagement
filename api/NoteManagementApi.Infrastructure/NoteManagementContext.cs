@@ -24,6 +24,11 @@ namespace NoteManagementInfrastructure
             modelBuilder.Entity<Note>()
                 .HasMany(x => x.Categories);
 
+            modelBuilder.Entity<Category>().HasData(
+                new Category() { CategoryId = 1, Name = "Work" },
+                new Category() { CategoryId = 2, Name = "Home" },
+                new Category() { CategoryId = 3, Name = "Holiday" }
+            );
         }
 
     }

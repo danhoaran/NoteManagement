@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoteManagementCore.DTOs
+namespace NoteManagement.Core.Dtos
 {
-    public class NoteDto
+    public class NoteForCreationDto
     {
-        public int NoteId { get; set; }
         public string Body { get; set; }
         public DateTime CreationDate { get; set; }
-        public List<CategoryDto>? Categories { get; set; }
+        public List<int> CategoryIds { get; set; }
     }
 }

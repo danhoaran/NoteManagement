@@ -4,6 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>e56c9ef0-c2aa-4aa9-9eb8-db62e47fb56e</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NoteManagement.Infrastructure\NoteManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\NoteManagement.Services\NoteManagement.Services.csproj" />
+  </ItemGroup>
 
 </Project>
