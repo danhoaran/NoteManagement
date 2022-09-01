@@ -1,0 +1,23 @@
+﻿@model CreateNoteViewModel
+
+@{
+    ViewData["Title"] = "Notes management";
+}
+
+<h1>Notes</h1>
+
+<p>Display notes here</p>
+
+<h1>Create note here</h1>
+
+@foreach(var category in Model.Categories)
+{
+    <tr>
+        <td>
+            <input id="@category.Value" type="checkbox" name="Category" value="@category.Value" checked="@category.Selected" />
+        </td>
+        <td>
+            <label for="@category.Value">@category.Text</label>
+        </td>
+    </tr>
+}
