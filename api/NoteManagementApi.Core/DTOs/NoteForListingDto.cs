@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoteManagement.Core.Dtos
+namespace NoteManagementApi.Core.DTOs
 {
     public class NoteForListingDto
     {

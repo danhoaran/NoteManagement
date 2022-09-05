@@ -29,6 +29,7 @@ namespace NoteManagementInfrastructure
                 new Category() { CategoryId = 2, Name = "Home" },
                 new Category() { CategoryId = 3, Name = "Holiday" }
             );
+
         }
 
     }

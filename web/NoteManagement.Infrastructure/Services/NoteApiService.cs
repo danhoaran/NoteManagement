@@ -27,19 +27,19 @@ namespace NoteManagement.Infrastructure.Services
 
         public async Task<NoteCreationResponseDto> CreateNote(NoteForCreationDto dto)
         {
-            var response = await PostRequest<NoteCreationResponseDto>("/api/Note", dto);
+            var response = await PostRequest<NoteCreationResponseDto>("/api/Notes", dto);
             return response;
         }
 
         public async Task<List<NoteForListingDto>> GetAllNotes()
         {
-            var response = await GetRequest<List<NoteForListingDto>>($"/api/Note");
+            var response = await GetRequest<List<NoteForListingDto>>($"/api/Notes");
             return response;
         }
 
         public async Task<NoteForHtmlDto> GetNoteForWebsite(int noteId)
         {
-            var response = await GetRequest<NoteForHtmlDto>($"/api/Note/{noteId}/html");
+            var response = await GetRequest<NoteForHtmlDto>($"/api/Notes/{noteId}/html");
             return response;
         }
 

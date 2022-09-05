@@ -1,4 +1,4 @@
-﻿using NoteManagementCore.DTOs;
+﻿using NoteManagementApi.Core.DTOs;
 using NoteManagementCore.Models;
 using System;
 using System.Collections.Generic;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NoteManagement.Core;
+using NoteManagement.Core.Dtos;
 using NoteManagement.Core.Interfaces;
 using NotesManagemet.Web.Models;
 
@@ -32,9 +33,28 @@ namespace NotesManagemet.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> AddNewNote(CreateNoteViewModel model)
         {
-            return Json(true);
+            var dtoForCreation = new NoteForCreationDto();
+            dtoForCreation.Body = model.Body;
+
+            var selectedIds = new List<int>();
+
+            foreach (var category in model.Categories)
+            {
+                if(category.Selected)
+                    selectedIds.Add(Convert.ToInt32(category.Value));
+            }
+
+            dtoForCreation.CategoryIds = selectedIds;
+            var status = await _noteManagementService.AddNewNote(dtoForCreation);
+            return Json(status.Success);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> LoadAllNotes()
+        {
+            var notes = await _noteManagementService.GetAllNotes();
+            return Json(notes);
+        }
 
     }
 }

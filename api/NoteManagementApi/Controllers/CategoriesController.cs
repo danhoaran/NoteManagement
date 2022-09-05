@@ -1,6 +1,6 @@
 ﻿using Markdig;
 using Microsoft.AspNetCore.Mvc;
-using NoteManagementCore.DTOs;
+using NoteManagementApi.Core.DTOs;
 using NoteManagementCore.Services;
 
 namespace NoteManagementApi.Controllers

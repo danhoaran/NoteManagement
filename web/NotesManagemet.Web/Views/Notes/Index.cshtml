@@ -4,24 +4,14 @@
     ViewData["Title"] = "Notes management";
 }
 
-<h1>Notes</h1>
-
-<p>Display notes here</p>
-
 <h1>Create note here</h1>
 
+<div id="note-success" class="text-success"></div>
 
 <form id="create-note-form" method="post">
     @Html.AntiForgeryToken()
     <div class="mb-3">
         <label asp-for="@Model.Categories" class="form-label"></label>
-@*        @foreach (var category in Model.Categories)
-        {
-            <div class="form-check">
-                <input class="form-check-input" id="@category.Value" type="checkbox" name="Category" value="@category.Value" checked="@category.Selected" />
-                <label class="form-check-label" for="@category.Value">@category.Text</label>
-            </div>
-        }*@
 
         @for (var i = 0; i < Model.Categories.Count; i++)
         {
@@ -42,6 +32,10 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
+
+<h1>Notes</h1>
+
+<div id="all-notes"></div>
 
 @section Scripts {
     <script src="~/js/notes.js"></script>

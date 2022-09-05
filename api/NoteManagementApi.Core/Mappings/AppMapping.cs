@@ -1,12 +1,6 @@
 ﻿using AutoMapper;
-using Markdig;
-using NoteManagementCore.DTOs;
+using NoteManagementApi.Core.DTOs;
 using NoteManagementCore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoteManagementCore.Mappings
 {
@@ -16,12 +10,19 @@ namespace NoteManagementCore.Mappings
         {
             CreateMap<CategoryForCreationDto, Category>();
             CreateMap<Category, CategoryDto>();
-            CreateMap<NoteForCreationDto, Note>();
+            CreateMap<NoteForCreationDto, Note>()
+                .ForMember(dest => dest.CreationDate,
+                opt => opt.MapFrom(src => DateTime.UtcNow));
             CreateMap<NoteForUpdateDto, Note>();
             CreateMap<Note, NoteDto>();
             CreateMap<Note, NoteForHtmlDto>()
                 .ForMember(dest => dest.BodyHtml,
                 opt => opt.MapFrom(src => src.Body));
+            CreateMap<Note, NoteForListingDto>()
+                .ForMember(dest => dest.CreationDate,
+                opt => opt.MapFrom(src => src.CreationDate.ToString("f")))
+                .ForMember(dest => dest.Categories,
+                opt => opt.MapFrom(src => src.Categories != null ? src.Categories.Select(x => x.Name) : new List<string>()));
         }
 
     }

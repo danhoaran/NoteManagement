@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
-using NoteManagementCore.DTOs;
+using NoteManagementApi.Core.DTOs;
 using NoteManagementCore.Models;
 using NoteManagementCore.Services;
 using NoteManagementInfrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace NoteManagementServices.Services
 {
@@ -53,9 +49,14 @@ namespace NoteManagementServices.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IList<NoteDto>> GetAllNotesAsync()
+        public async Task<IList<NoteForListingDto>> GetAllNotesAsync()
         {
-            return _mapper.Map<List<NoteDto>>(await _context.Notes.Include(x => x.Categories).ToListAsync());
+            var notes = await _context.Notes.Include(x => x.Categories).ToListAsync();
+
+            if (notes == null)
+                return new List<NoteForListingDto>();
+
+            return _mapper.Map<List<NoteForListingDto>>(notes);
         }
 
         public async Task<NoteForHtmlDto> GetNoteForHtmlAsync(int id)

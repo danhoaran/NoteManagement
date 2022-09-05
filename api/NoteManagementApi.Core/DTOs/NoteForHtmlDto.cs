@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NoteManagementCore.DTOs
+namespace NoteManagementApi.Core.DTOs
 {
     public class NoteForHtmlDto
     {

@@ -1,7 +1,6 @@
 ﻿using Markdig;
 using Microsoft.AspNetCore.Mvc;
 using NoteManagementApi.Core.DTOs;
-using NoteManagementCore.DTOs;
 using NoteManagementCore.Services;
 using NoteManagementServices.Services;
 using System.Linq.Expressions;
@@ -20,7 +19,7 @@ namespace NoteManagementApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<NoteDto>>> GetAllNotes()
+        public async Task<ActionResult<List<NoteForListingDto>>> GetAllNotes()
         {
             return Ok(await _noteService.GetAllNotesAsync());
         }
