@@ -5,7 +5,7 @@ using NoteManagementApi.Core.DTOs;
 using NoteManagementCore.Models;
 using NoteManagementCore.Services;
 using NoteManagementInfrastructure;
-
+using System.Linq.Expressions;
 
 namespace NoteManagementServices.Services
 {
@@ -34,6 +34,11 @@ namespace NoteManagementServices.Services
                 {
                     categoriesToAdd.Add(category);
                 }
+            }
+
+            if (categoriesToAdd == null || categoriesToAdd.Count == 0)
+            {
+                throw new ArgumentNullException("Problem creating note - please make sure at least one category is added");
             }
 
             var entity = _mapper.Map<Note>(noteFotCreationDto);

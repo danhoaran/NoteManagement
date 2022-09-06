@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Notes management";
+    Layout = "_Layout";
 }
 
 <h1>Create note here</h1>
@@ -22,11 +23,11 @@
                 <label class="form-check-label" for="@Model.Categories[i].Value">@Model.Categories[i].Text</label>
             </li>
         }
-
     </div>
     <div class="mb-3">
         <label asp-for="@Model.Body" class="form-label"></label>
         <textarea class="form-control" asp-for="@Model.Body"></textarea>
+        <span asp-validation-for="@Model.Body" class="text-danger"></span>
     </div>
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Submit</button>

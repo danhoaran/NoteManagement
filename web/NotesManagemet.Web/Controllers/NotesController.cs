@@ -4,6 +4,7 @@ using NoteManagement.Core;
 using NoteManagement.Core.Dtos;
 using NoteManagement.Core.Interfaces;
 using NotesManagemet.Web.Models;
+using System.Reflection;
 
 namespace NotesManagemet.Web.Controllers
 {
@@ -17,6 +18,7 @@ namespace NotesManagemet.Web.Controllers
             _categoryRetrievalService = categoryRetrievalService;
             _noteManagementService = noteManagementService;
         }
+
         public async Task<IActionResult> Index()
         {
             var model = new CreateNoteViewModel();
@@ -33,20 +35,28 @@ namespace NotesManagemet.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> AddNewNote(CreateNoteViewModel model)
         {
-            var dtoForCreation = new NoteForCreationDto();
-            dtoForCreation.Body = model.Body;
-
-            var selectedIds = new List<int>();
-
-            foreach (var category in model.Categories)
+            if (ModelState.IsValid)
             {
-                if(category.Selected)
-                    selectedIds.Add(Convert.ToInt32(category.Value));
+                var dtoForCreation = new NoteForCreationDto();
+                dtoForCreation.Body = model.Body;
+
+                var selectedIds = new List<int>();
+
+                foreach (var category in model.Categories)
+                {
+                    if (category.Selected)
+                        selectedIds.Add(Convert.ToInt32(category.Value));
+                }
+
+                dtoForCreation.CategoryIds = selectedIds;
+                var status = await _noteManagementService.AddNewNote(dtoForCreation);
+                return Json(status.Success);
+            } 
+            else
+            {
+                return Json(false);
             }
 
-            dtoForCreation.CategoryIds = selectedIds;
-            var status = await _noteManagementService.AddNewNote(dtoForCreation);
-            return Json(status.Success);
         }
 
         [HttpPost]

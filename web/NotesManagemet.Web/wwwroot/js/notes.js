@@ -3,25 +3,26 @@
     loadExistingNotes();
 
     $("#create-note-form").on('submit', function (e) {
-        let successMessage = document.getElementById("note-success");
-        successMessage.innerHTML = "";
         e.preventDefault();
-        let formData = $("#create-note-form");
-        let serialized = formData.serialize();
-        $.ajax(
-            {
-                type: "POST",
-                data: serialized,
-                url: '/Notes/AddNewNote/',
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-            }).done(function (result) {
-                if (result) {                   
-                    successMessage.innerHTML = "Note added";
-                    let container = document.getElementById("all-notes");
-                    container.innerHTML = "";
-                    loadExistingNotes();
-                }
-            });
+            let successMessage = document.getElementById("note-success");
+            successMessage.innerHTML = "";
+
+            let formData = $("#create-note-form");
+            let serialized = formData.serialize();
+            $.ajax(
+                {
+                    type: "POST",
+                    data: serialized,
+                    url: '/Notes/AddNewNote/',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                }).done(function (result) {
+                    if (result) {
+                        successMessage.innerHTML = "Note added";
+                        let container = document.getElementById("all-notes");
+                        container.innerHTML = "";
+                        loadExistingNotes();
+                    }
+                });      
     })
 });
 
