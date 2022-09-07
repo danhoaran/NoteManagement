@@ -27,7 +27,14 @@ namespace NoteManagementApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<NoteDto>> GetNote(int id)
         {
-            return new NoteDto();
+            try
+            {
+                return Ok(await _noteService.GetNoteByIdAsync(id));
+            }
+            catch (KeyNotFoundException)
+            {
+                return BadRequest("note id not found");
+            }
         }
 
         [HttpGet("{id}/html")]
@@ -53,6 +60,7 @@ namespace NoteManagementApi.Controllers
         [HttpPut]
         public async Task<ActionResult> Update(NoteForUpdateDto dto)
         {
+            await _noteService.UpdateNoteAsync(dto);
             return NoContent();
         }
 
@@ -60,6 +68,7 @@ namespace NoteManagementApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
+            await _noteService.DeleteNoteAsync(id);
             return NoContent();
         }
     }

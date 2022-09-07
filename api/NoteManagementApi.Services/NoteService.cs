@@ -49,9 +49,16 @@ namespace NoteManagementServices.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteNoteAsync(int id)
+        public async Task DeleteNoteAsync(int id)
         {
-            throw new NotImplementedException();
+            var note = await _context.Notes.Include(x => x.Categories).Where(x => x.NoteId == id).FirstOrDefaultAsync();
+
+            if (note == null)
+                throw new KeyNotFoundException("No note found with specified id");
+
+            _context.Notes.Remove(note);
+            await _context.SaveChangesAsync();
+
         }
 
         public async Task<IList<NoteForListingDto>> GetAllNotesAsync()
@@ -66,7 +73,7 @@ namespace NoteManagementServices.Services
 
         public async Task<NoteForHtmlDto> GetNoteForHtmlAsync(int id)
         {
-            var note = await _context.Notes.Include(x => x.Categories).FirstOrDefaultAsync();
+            var note = await _context.Notes.Include(x => x.Categories).Where(x => x.NoteId == id).FirstOrDefaultAsync();
 
             if (note == null)
                 throw new KeyNotFoundException("No note found with specified id");
@@ -76,14 +83,44 @@ namespace NoteManagementServices.Services
             return _mapper.Map<NoteForHtmlDto>(note);
         }
 
-        public Task<NoteDto> GetNoteByIdAsync(int id)
+        public async Task<NoteDto> GetNoteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var note = await _context.Notes.Include(x => x.Categories).Where(x => x.NoteId == id).FirstOrDefaultAsync();
+
+            if (note == null)
+                throw new KeyNotFoundException("No note found with specified id");
+
+            return _mapper.Map<NoteDto>(note);
         }
 
-        public Task UpdateNoteAsync(NoteForUpdateDto noteForUpdateDto)
+        public async Task UpdateNoteAsync(NoteForUpdateDto noteForUpdateDto)
         {
-            throw new NotImplementedException();
+            var existing = await _context.Notes.Include(x => x.Categories).Where(x => x.NoteId == noteForUpdateDto.NoteId).FirstOrDefaultAsync();
+
+            if (existing == null)
+                throw new KeyNotFoundException("No note found with specified id");
+
+            var allCategories = _context.Categories.ToList();
+            var categoriesToAdd = new List<Category>();
+
+            foreach (var categoryId in noteForUpdateDto.CategoryIds)
+            {
+                var category = allCategories.FirstOrDefault(x => x.CategoryId == categoryId);
+                if (category != null)
+                {
+                    categoriesToAdd.Add(category);
+                }
+            }
+
+            if (categoriesToAdd == null || categoriesToAdd.Count == 0)
+            {
+                throw new ArgumentNullException("Problem updating note - please make sure at least one category is added");
+            }
+
+            existing.Categories = categoriesToAdd;
+            existing.Body = noteForUpdateDto.Body;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

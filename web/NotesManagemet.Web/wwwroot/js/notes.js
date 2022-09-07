@@ -4,8 +4,10 @@
 
     $("#create-note-form").on('submit', function (e) {
         e.preventDefault();
-            let successMessage = document.getElementById("note-success");
-            successMessage.innerHTML = "";
+        let successMessage = document.getElementById("note-success");
+        let errorMessage = document.getElementById("note-error");
+        successMessage.innerHTML = "";
+        errorMessage.innerHTML = "";
 
             let formData = $("#create-note-form");
             let serialized = formData.serialize();
@@ -16,13 +18,24 @@
                     url: '/Notes/AddNewNote/',
                     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 }).done(function (result) {
-                    if (result) {
-                        successMessage.innerHTML = "Note added";
-                        let container = document.getElementById("all-notes");
-                        container.innerHTML = "";
-                        loadExistingNotes();
-                    }
-                });      
+                    switch (result) {
+                        case 1:
+                            successMessage.innerHTML = "Note added";
+                            let container = document.getElementById("all-notes");
+                            container.innerHTML = "";
+                            loadExistingNotes();
+                            break;
+                        case -1:
+                            errorMessage.innerHTML = "Please select at least one category";
+                            break;
+                        case -2:
+                            errorMessage.innerHTML = "Something has gone wrong. Help is one the way!"
+                            break;
+                        case -3:
+                            errorMessage.innerHTML = "Problem submitting form";
+                            break;                      
+                        }
+            });      
     })
 });
 

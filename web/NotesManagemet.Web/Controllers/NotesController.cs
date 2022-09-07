@@ -48,13 +48,17 @@ namespace NotesManagemet.Web.Controllers
                         selectedIds.Add(Convert.ToInt32(category.Value));
                 }
 
+                if (selectedIds.Count == 0)
+                    return Json(-1);
+
+
                 dtoForCreation.CategoryIds = selectedIds;
                 var status = await _noteManagementService.AddNewNote(dtoForCreation);
-                return Json(status.Success);
+                return Json(status.Success ? 1 : -2);
             } 
             else
             {
-                return Json(false);
+                return Json(-3);
             }
 
         }

@@ -10,7 +10,6 @@ namespace NoteManagementApi.Core.DTOs
     {
         public int NoteId { get; set; }
         public string Body { get; set; }
-        public DateTime CreationDate { get; set; }
         public List<int> CategoryIds { get; set; }
     }
 }

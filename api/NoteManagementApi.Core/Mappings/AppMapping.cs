@@ -14,8 +14,12 @@ namespace NoteManagementCore.Mappings
                 .ForMember(dest => dest.CreationDate,
                 opt => opt.MapFrom(src => DateTime.UtcNow));
             CreateMap<NoteForUpdateDto, Note>();
-            CreateMap<Note, NoteDto>();
+            CreateMap<Note, NoteDto>()
+                .ForMember(dest => dest.CreationDate,
+                opt => opt.MapFrom(src => src.CreationDate.ToString("f")));
             CreateMap<Note, NoteForHtmlDto>()
+                .ForMember(dest => dest.CreationDate,
+                opt => opt.MapFrom(src => src.CreationDate.ToString("f")))
                 .ForMember(dest => dest.BodyHtml,
                 opt => opt.MapFrom(src => src.Body));
             CreateMap<Note, NoteForListingDto>()
