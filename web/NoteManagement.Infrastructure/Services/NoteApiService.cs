@@ -16,10 +16,11 @@ namespace NoteManagement.Infrastructure.Services
     {
         private readonly string _serviceUrl;
         private readonly RestClient _restClient;
+        //private readonly IOptionsSnapshot<ApiConfig> _apiConfig;
 
-        public NoteApiService()
+        public NoteApiService(IOptionsSnapshot<ApiConfig> apiConfig)
         {
-            _serviceUrl = "https://localhost:7105/";
+            _serviceUrl = apiConfig.Value.Url;
             var restOptions = new RestClientOptions(_serviceUrl);
             restOptions.RemoteCertificateValidationCallback = (sender, certificate, chain, errors) => true;
             _restClient = new RestClient(restOptions);
