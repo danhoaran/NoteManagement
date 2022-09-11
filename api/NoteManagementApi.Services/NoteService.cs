@@ -78,7 +78,8 @@ namespace NoteManagementServices.Services
             if (note == null)
                 throw new KeyNotFoundException("No note found with specified id");
 
-            note.Body = Markdown.ToHtml(note.Body);
+            var converted = Markdown.ToHtml(note.Body);
+            note.Body = converted.Trim();
 
             return _mapper.Map<NoteForHtmlDto>(note);
         }
