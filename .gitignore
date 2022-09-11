@@ -353,14 +353,5 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# log
-/src/MarketingAssets.Web/log.txt
-
 # Parcel
 .parcel-cache
-
-# JS build
-/src/MarketingAssets.Web/wwwroot/dist/js
-
-# CSS files
-*.css

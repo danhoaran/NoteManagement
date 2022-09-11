@@ -9,7 +9,7 @@ namespace NotesManagemet.Web.Models
         {
             Categories = new List<SelectListItem>();
         }
-        [MaxLength(70)]
+        [Required]
         public string Body { get; set; }
         public List<SelectListItem> Categories { get; set; }
     }
