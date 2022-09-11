@@ -43,6 +43,8 @@ function SetupHtml(data) {
     let container = document.getElementById("all-notes");
 
     for (let x = 0; x < data.length; x++) {
+        let noteContainer = document.createElement("div");
+        noteContainer.className = "container p-3 my-3 border";
         let categoriesDiv = document.createElement("div");
         let categoriesHtml = document.createElement("label");
         categoriesHtml.innerHTML = data[x].categories;
@@ -56,9 +58,11 @@ function SetupHtml(data) {
         dateCreatedHtml.innerHTML = data[x].creationDate;
         dateCreatedDiv.appendChild(dateCreatedHtml);
 
-        container.appendChild(categoriesDiv);
-        container.appendChild(bodyDiv);
-        container.appendChild(dateCreatedDiv);
+        noteContainer.appendChild(categoriesDiv);
+        noteContainer.appendChild(bodyDiv);
+        noteContainer.appendChild(dateCreatedDiv);
+
+        container.appendChild(noteContainer);
     }
 }
 
